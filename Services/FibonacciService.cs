@@ -24,7 +24,6 @@ namespace Fibonacci_API.Services
             CacheEnabled = cacheEnabled;
             CachingService = _cachingService;
 
-
             //Pass index arguments to async task
             var fibsequence = await ExecuteFibonacciOperation(startIndex, endIndex);
             return fibsequence; 
@@ -160,7 +159,7 @@ namespace Fibonacci_API.Services
             long secondnumber = 1;
             long result = 0;
 
-            for (int i = 0; i <= endIndex + 1; i++)
+            for (int i = 0; i <= endIndex; i++)
             {
                 //check if cached key-value pair is present in the List<T>
                 if (CachingService.CacheReadExist(i))

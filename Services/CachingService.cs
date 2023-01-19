@@ -39,7 +39,7 @@ namespace Fibonacci_API.Services
                 var res = FibonacciSequenceCached
                             .Where(x => x.Key >= startIndex && x.Key <= endIndex);
 
-                return (from kvp in res select kvp.Value).Distinct().ToList();
+                return (from kvp in res select kvp.Value).ToList();
             }
             catch (Exception)
             {
