@@ -21,6 +21,11 @@ namespace Fibonacci_API.Controllers
             _cachingService = cachingService;
         }
 
+        /// <summary>
+        /// Generates the Fibonacci sequence based on the inputs provided.
+        /// Please note that larger ranges may cause the integer to overflow.
+        /// </summary>
+        /// <param name="inputType">The value !!</param>
         //POST 
         [HttpPost]
         public async Task<ActionResult> GenerateFibonacciSequence([FromBody] InputType inputType)
