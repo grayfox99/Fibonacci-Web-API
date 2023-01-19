@@ -16,6 +16,7 @@ were generated with extra information indicating the timeout occurred.
 5. A maximum amount of memory the program can use. If, during the execution of the request 
 this amount is reached, the execution aborts. The program should return as many generated 
 numbers as possible similarly to the way it does in case if timeout is reached.
+
 To simulate a CPU intensive task there is an artificial requirement to do 500ms delay after a new 
 Fibonacci number is computed. The delay should be applied to the current thread / execution 
 context. This means another thread / execution context can proceed with the next number calculation 
