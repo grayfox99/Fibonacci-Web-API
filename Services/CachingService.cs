@@ -7,11 +7,19 @@ namespace Fibonacci_API.Services
     //to enable quick lookups of nth term and the corresponding fibonacci sequence
     public class CachingService : ICachingService
     {
+        #region fields
         private int executionCount = 0;
         private readonly ILogger<CachingService>? _logger;
         private Timer? _timer;
-        public static TimeSpan CacheExpirationTime_Minutes { get; private set; }
         private static readonly object _locker = new();
+        #endregion
+
+        #region Properties
+        public static TimeSpan CacheExpirationTime_Minutes { get; private set; }
+        private static List<KeyValuePair<int, long>> FibonacciSequenceCached { get; set; } = new List<KeyValuePair<int, long>>();
+        #endregion
+
+        #region constructor
         public CachingService(IConfiguration configuration, ILogger<CachingService> logger) 
         {
             _logger = logger;
@@ -30,16 +38,16 @@ namespace Fibonacci_API.Services
 
             StartAsync();
         }
-
-        //seperate constructer for unit-tests
+        
+        //seperate constructor for unit-tests
         public CachingService()
         {
             CacheExpirationTime_Minutes = TimeSpan.FromMinutes(1);
             //StartAsync();
         }
+        #endregion
 
-        private static List<KeyValuePair<int, long>> FibonacciSequenceCached { get; set; } = new List<KeyValuePair<int, long>>();
-
+        #region methods
         public void CacheWrite(int indexVal, long writeVal)
         {
             KeyValuePair<int, long> newPair = new(indexVal, writeVal);
@@ -77,24 +85,6 @@ namespace Fibonacci_API.Services
             }
         }
 
-        [Obsolete]
-        public List<long> CacheReadReturn(int startIndex)
-        {
-            try
-            {
-                var res = FibonacciSequenceCached
-                            .OrderBy(x => x.Key)
-                            .Skip(startIndex + 1);
-
-                return (from kvp in res select kvp.Value).Distinct().ToList();
-            }
-            catch (Exception)
-            {
-                //return emppty string for exception handling
-                return new List<long>();
-            }
-        }
-
         public long CachReadReturn_Single(int startIndex)
         {
             return FibonacciSequenceCached
@@ -121,5 +111,23 @@ namespace Fibonacci_API.Services
                 "Cache cleared. Count: {Count}", count);
         }
 
+#endregion
+        [Obsolete]
+        public List<long> CacheReadReturn(int startIndex)
+        {
+            try
+            {
+                var res = FibonacciSequenceCached
+                            .OrderBy(x => x.Key)
+                            .Skip(startIndex + 1);
+
+                return (from kvp in res select kvp.Value).Distinct().ToList();
+            }
+            catch (Exception)
+            {
+                //return emppty string for exception handling
+                return new List<long>();
+            }
+        }
     }
 }
