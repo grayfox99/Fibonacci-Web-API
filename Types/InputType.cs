@@ -25,7 +25,7 @@ namespace Fibonacci_API.Types
         [Required(ErrorMessage = "Memory Limit is required")]
         public int MemoryLimit { get; set; }
 
-        [Range(5, 60000)]
+        [Range(5, 300000)]
         [Required(ErrorMessage = "Time Limit is required")]
         [DefaultValue(10000)]
         public int TimeLimit { get; set; }

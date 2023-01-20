@@ -13,7 +13,7 @@ namespace Fibonacci_API.Services
         public TimeSpan TimeoutLimit { get; private set; }
         public int MemoryLimit { get; private set; }
         public List<long> MemoryRecord { get; private set; } = new List<long> { 0 };
-        public ICachingService CachingService { get; set; } = new CachingService();
+        public ICachingService CachingService { get; set; } 
         #endregion
 
         #region Methods
